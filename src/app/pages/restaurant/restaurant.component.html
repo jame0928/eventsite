@@ -1,0 +1,102 @@
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">
+            <h3>Lista de restaurantes</h3>
+        </div>
+        <div class="card-actions">
+            <restaurant-form (success)="dataSource.loadData()">
+                <button class="btn btn-primary" type="button">
+                    <i class="mdi mdi-plus"></i>
+                    Agregar
+                </button>
+            </restaurant-form>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">        
+        <div perfectScrollbar class="mat-table__wrapper mat-table__wrapper--dashboard mb-4">
+            <mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="asc" matSortDisableClear>
+        
+                <!-- Name. Column -->
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                </ng-container>
+                
+                <!-- Address. Column -->
+                <ng-container matColumnDef="address">
+                    <mat-header-cell *matHeaderCellDef> Dirección </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.address}} </mat-cell>
+                </ng-container>
+                
+                <!-- number_of_branches. Column -->
+                <ng-container matColumnDef="number_of_branches">
+                    <mat-header-cell *matHeaderCellDef> Nº de Sucursales </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.number_of_branches}} </mat-cell>
+                </ng-container>
+                
+                <!-- service_book. Column -->
+                <ng-container matColumnDef="service_book">
+                    <mat-header-cell *matHeaderCellDef> Reservas </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> <span [innerHtml]="element.service_book | afirmationNegation"></span></mat-cell>
+                </ng-container>
+                
+                <!-- service_delivery. Column -->
+                <ng-container matColumnDef="service_delivery">
+                    <mat-header-cell *matHeaderCellDef> Domicilios </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> <span [innerHtml]="element.service_delivery | afirmationNegation"></span></mat-cell>
+                </ng-container>               
+                
+                <!-- service_room. Column -->
+                <ng-container matColumnDef="service_room">
+                    <mat-header-cell *matHeaderCellDef> Servicio en Habitación </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> <span [innerHtml]="element.service_room | afirmationNegation"></span></mat-cell>
+                </ng-container>
+                
+                <!-- service_table. Column -->
+                <ng-container matColumnDef="service_table">
+                    <mat-header-cell *matHeaderCellDef> Servicio en Mesa </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> <span [innerHtml]="element.service_table | afirmationNegation"></span></mat-cell>
+                </ng-container>
+
+                <!-- service_take_away. Column -->
+                <ng-container matColumnDef="service_take_away">
+                    <mat-header-cell *matHeaderCellDef> Para Llevar </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> <span [innerHtml]="element.service_take_away | afirmationNegation"></span></mat-cell>
+                </ng-container>
+                
+
+                <!-- Actions -->
+                <ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+					<mat-cell *matCellDef="let element">                        
+                        
+                        <restaurant-form [restaurant]="element" (success)="dataSource.loadData()">
+                            <button class="btn btn-sm btn-warning">
+                                <i class="mdi mdi-pencil"></i>
+                                Editar
+                            </button>
+                        </restaurant-form>      
+                        
+                        <button class="btn btn-sm btn-danger margin-left-10" (click)="deleteRestaurant(element)">
+                            <i class="mdi mdi-trash"></i>
+                            Eliminar
+                        </button>
+                        
+					</mat-cell>
+				</ng-container>
+            
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"  [ngClass] = "{'row-disabled' : row.state != 1}"></mat-row>
+            </mat-table>
+        
+        </div>
+        <!-- start: BOTTOM -->
+        <div class="mat-table__bottom mat-table__bottom--padding">
+            <mat-paginator [pageSize]="restaurantService.tableConfig.pageSize" [pageSizeOptions]="restaurantService.tableConfig.sizeOptions" [length]="dataSource.totalItems$ | async" [showFirstLastButtons]="restaurantService.tableConfig.showFirstLastButtons"></mat-paginator>
+        </div>
+        <!-- end: BOTTOM -->
+    </div>    
+</div>

@@ -1,0 +1,191 @@
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">
+            <h3>Crear Instancia</h3>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">  
+		<form class="kt-form" [formGroup]="instanceForm" autocomplete="off">
+			<div class="kt-portlet__body">
+
+				<div class="kt-portlet__body-progress" [hidden]="!instanceService.loading">
+					<mat-spinner [diameter]="20"></mat-spinner>
+				</div>
+
+				<fieldset>
+					<legend>Datos del usuario</legend>
+					<div class="form-group kt-form__group row" [formGroup]="user">
+
+
+						<div class="col-lg-4 kt-margin-bottom-20">
+							<mat-form-field class="mat-form-field-fluid">
+								<input matInput placeholder="Nombre" formControlName="first_name" />							
+								<mat-error>
+									<span *ngIf="user.controls.first_name.errors?.required"> Por favor ingrese el 
+										<strong>Nombre</strong>
+									</span>
+									<span *ngIf="user.controls.first_name.errors?.minlength || user.controls.first_name.errors?.maxlength"> 
+										El <strong>Nombre</strong> debe contener entre 3 y 150 caracteres
+									</span>
+								</mat-error>
+							</mat-form-field>
+						</div>
+						
+						<div class="col-lg-4 kt-margin-bottom-20">
+							<mat-form-field class="mat-form-field-fluid">
+								<input matInput placeholder="Apellido" formControlName="last_name" />							
+								<mat-error>
+									<span *ngIf="user.controls.last_name.errors?.required"> Por favor ingrese el 
+										<strong>Apellido</strong>
+									</span>
+									<span *ngIf="user.controls.last_name.errors?.minlength || user.controls.last_name.errors?.maxlength"> 
+										El <strong>Apellido</strong> debe contener entre 3 y 150 caracteres
+									</span>
+								</mat-error>
+							</mat-form-field>
+						</div>
+						
+						<div class="col-lg-4 kt-margin-bottom-20">
+							<mat-form-field class="mat-form-field-fluid">
+								<input matInput placeholder="Correo" formControlName="email" />							
+								<mat-error>
+									<span *ngIf="user.controls.email.errors?.required"> Por favor ingrese el 
+										<strong>Correo</strong>
+									</span>
+									<span *ngIf="user.controls.email.errors?.email"> 
+										El <strong>Correo</strong> ingresado es inválido
+									</span>
+								</mat-error>
+							</mat-form-field>
+						</div>
+
+						<div class="col-lg-4 kt-margin-bottom-20">
+							<mat-form-field class="mat-form-field-fluid">
+								<input matInput type="password" placeholder="Contraseña" formControlName="password" />							
+								<mat-error>
+									<span *ngIf="user.controls.password.errors?.required"> Por favor ingrese la 
+										<strong>Contraseña</strong>
+									</span>
+									<span *ngIf="user.controls.password.errors?.minlength || user.controls.password.errors?.maxlength"> 
+										La <strong>Contraseña</strong> debe contener entre 6 y 20 caracteres
+									</span>
+								</mat-error>
+							</mat-form-field>
+						</div>
+
+						<div class="col-lg-4 kt-margin-bottom-20">
+							<mat-form-field class="mat-form-field-fluid">
+								<input matInput type="password" placeholder="Contraseña" formControlName="re_password" />							
+								<mat-error>
+									<span *ngIf="user.controls.re_password.errors?.required"> Por favor confirme la 
+										<strong>Contraseña</strong>
+									</span>
+									<span *ngIf="user.controls.re_password.errors?.passwordMatch"> 
+										La <strong>Contraseña</strong> no coincide
+									</span>
+								</mat-error>
+							</mat-form-field>
+						</div>
+						
+						<div class="col-lg-4 kt-margin-bottom-20" [formGroup]="phone">
+							<mat-form-field class="mat-form-field-fluid">
+								<span matPrefix>{{phone.get('code').value}} &nbsp;</span>
+								<input matInput placeholder="Teléfono" formControlName="number" />	
+							</mat-form-field>
+						</div>
+	
+						
+						
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<legend>Datos del restaurante</legend>
+					<div class="form-group kt-form__group row" [formGroup]="customer">
+
+
+						<div class="col-lg-4 kt-margin-bottom-20">
+							<mat-form-field class="mat-form-field-fluid">
+								<input matInput placeholder="Nombre" formControlName="name" />							
+								<mat-error>
+									<span *ngIf="customer.controls.name.errors?.required"> Por favor ingrese el 
+										<strong>Nombre</strong> del restaurante
+									</span>
+									<span *ngIf="customer.controls.name.errors?.minlength || customer.controls.name.errors?.maxlength"> 
+										El nombre debe contener entre 3 y 150 caracteres
+									</span>
+								</mat-error>
+							</mat-form-field>
+						</div>						
+						
+	
+						<div class="col-lg-4 margin-bottom-20">
+							<mat-form-field class="mat-form-field-fluid">
+								<input matInput type="number" placeholder="Nº de Sucursales" formControlName="number_of_branches" />
+								<mat-error>
+									<span *ngIf="customer.controls.number_of_branches.errors?.required"> Por favor ingrese la cantidad de 
+										<strong>Sucursales</strong>
+									</span>
+									<span *ngIf="customer.controls.number_of_branches.errors?.min"> 
+										La cantidad mínima debe ser 1
+									</span>
+									
+								</mat-error>							
+							</mat-form-field>
+						</div>
+	
+						<div class="col-lg-4 kt-margin-bottom-20">					
+							<mat-checkbox formControlName="service_book" matTooltip="Marque esta opción si el resturante cuenta con servicio de reservas">Servicio de Reservas</mat-checkbox>
+						</div>
+	
+						<div class="col-lg-4 kt-margin-bottom-20">					
+							<mat-checkbox formControlName="service_delivery" matTooltip="Marque esta opción si el resturante cuenta con servicio de domicilios">Servicio de Domicilios</mat-checkbox>
+						</div>
+	
+						<div class="col-lg-4 kt-margin-bottom-20">					
+							<mat-checkbox formControlName="service_table" matTooltip="Marque esta opción si el resturante cuenta con servicio de mesas">Servicio de Mesas</mat-checkbox>
+						</div>
+	
+						<div class="col-lg-4 kt-margin-bottom-20">					
+							<mat-checkbox formControlName="service_take_away" matTooltip="Marque esta opción si el resturante cuenta con servicio para llevar">Servicio para llevar</mat-checkbox>
+						</div>
+	
+						
+						
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<legend>Ubicación</legend>
+					<div class="form-group kt-form__group row">					
+						<div class="col-lg-8 kt-margin-bottom-20">
+							<mat-form-field>
+								<mat-label>Ubicación</mat-label>
+								<input matInput
+										formControlName="search_address"
+									   matGoogleMapsAutocomplete	
+									   country="co"		
+									   [types]="['address']"														  
+									   (onAutocompleteSelected)="onAutocompleteSelected($event)"
+									   >
+								<mat-error>
+									<span *ngIf="instanceForm.controls.search_address.errors?.required"> Por favor ingrese la  
+										<strong>Dirección</strong>
+									</span>
+									<span *ngIf="instanceForm.controls.search_address.errors?.fullAddressRequired && !instanceForm.controls.search_address.errors?.required"> La dirección ingresada no es correcta!
+									</span>
+								</mat-error>
+							  </mat-form-field>
+						</div>						
+					</div>
+				</fieldset>
+			</div>
+		</form>	
+	</div>
+	<div class="card-footer text-right">
+		<button type="button" class="btn btn-primary" (click)="onSubmit(instanceForm.value)" [disabled]="instanceService.loading">Guardar Cambios</button>
+	</div>
+</div>

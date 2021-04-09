@@ -1,0 +1,88 @@
+<h2 mat-dialog-title>{{getTitle()}}</h2>
+<mat-dialog-content class="mat-typography">
+
+		<form class="kt-form" [formGroup]="restaurantForm" autocomplete="off">
+			<div class="kt-portlet__body">
+
+				<div class="kt-portlet__body-progress" [hidden]="!restaurantService.loading">
+					<mat-spinner [diameter]="20"></mat-spinner>
+				</div>
+
+				<div class="form-group kt-form__group row">
+
+
+					<div class="col-lg-4 kt-margin-bottom-20">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput placeholder="Nombre" formControlName="name" />							
+							<mat-error>
+								<span *ngIf="restaurantForm.controls.name.errors?.required"> Por favor ingrese el 
+									<strong>Nombre</strong> del restaurante
+								</span>
+								<span *ngIf="restaurantForm.controls.name.errors?.minlength || restaurantForm.controls.name.errors?.maxlength"> 
+									El nombre debe contener entre 3 y 150 caracteres
+								</span>
+							</mat-error>
+						</mat-form-field>
+					</div>
+					
+					<div class="col-lg-4 kt-margin-bottom-20">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput placeholder="Dirección" formControlName="address" />							
+							<mat-error>
+								<span *ngIf="restaurantForm.controls.address.errors?.required"> Por favor ingrese la 
+									<strong>Dirección</strong> del restaurante
+								</span>
+								<span *ngIf="restaurantForm.controls.address.errors?.maxlength"> 
+									La dirección puede contener un máximo de 150 caracteres
+								</span>
+							</mat-error>
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-4 margin-bottom-20">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput type="number" placeholder="Nº de Sucursales" formControlName="number_of_branches" />
+							<mat-error>
+								<span *ngIf="restaurantForm.controls.number_of_branches.errors?.required"> Por favor ingrese la cantidad de 
+									<strong>Sucursales</strong>
+								</span>
+								<span *ngIf="restaurantForm.controls.number_of_branches.errors?.min"> 
+									La cantidad mínima debe ser 1
+								</span>
+								
+							</mat-error>							
+						</mat-form-field>
+					</div>
+
+					<div class="col-lg-4 kt-margin-bottom-20">					
+						<mat-checkbox formControlName="service_book" matTooltip="Marque esta opción si el resturante cuenta con servicio de reservas">Servicio de Reservas</mat-checkbox>
+					</div>
+
+					<div class="col-lg-4 kt-margin-bottom-20">					
+						<mat-checkbox formControlName="service_delivery" matTooltip="Marque esta opción si el resturante cuenta con servicio de domicilios">Servicio de Domicilios</mat-checkbox>
+					</div>
+
+					<div class="col-lg-4 kt-margin-bottom-20">					
+						<mat-checkbox formControlName="service_room" matTooltip="Marque esta opción si el resturante cuenta con servicio de habitación">Servicio de Habitación</mat-checkbox>
+					</div>
+
+					<div class="col-lg-4 kt-margin-bottom-20">					
+						<mat-checkbox formControlName="service_table" matTooltip="Marque esta opción si el resturante cuenta con servicio de mesas">Servicio de Mesas</mat-checkbox>
+					</div>
+
+					<div class="col-lg-4 kt-margin-bottom-20">					
+						<mat-checkbox formControlName="service_take_away" matTooltip="Marque esta opción si el resturante cuenta con servicio para llevar">Servicio para llevar</mat-checkbox>
+					</div>
+					
+					
+				</div>
+			</div>
+		</form>	
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button type="button" class="btn btn-danger" [mat-dialog-close]="data.animal" [disabled]="restaurantService.loading">
+		Cancelar
+	</button>&nbsp;
+	<button type="button" class="btn btn-primary" (click)="onSubmit(restaurantForm.value)" [disabled]="restaurantService.loading">Guardar Cambios</button>
+</mat-dialog-actions>
